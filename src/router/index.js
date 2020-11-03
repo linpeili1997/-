@@ -50,6 +50,7 @@ const router = new VueRouter({
   routes
 })
 
+//路由守卫  判断是否回到登陆页
 router.beforeEach((to, from, next) => {
   //
   if (localStorage.getItem('token') && to.path === '/login') {

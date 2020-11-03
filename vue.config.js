@@ -9,7 +9,7 @@ module.exports = {
                  pathRewrite: {
                      " ^/api " :  ""          //若请求的路径在目标url下但不在/team下，则将其转换成空
                  }    
-            }
+            },
         }
     }     
 }
