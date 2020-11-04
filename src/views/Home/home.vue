@@ -21,16 +21,16 @@
           >
             <el-submenu index="1">
               <template slot="title">
-                <span>分销管理</span>
-                <!-- <span>佣金管理</span>
-                <span>积分管理</span>
-                <span>提现管理</span> -->
+                <span v-if="item.appName == 'auth'">分销管理</span>
+                <span v-if="item.appName == 'refundPlatform'">佣金管理</span>
+                <span v-if="item.appName == 'ad'">积分管理</span>
+                <span v-if="item.appName == 'message'">提现管理</span>
               </template>
-              <el-menu-item-group style="min-width:0">
-                <el-menu-item  index="" >团队列表</el-menu-item>
-                <!-- <el-menu-item  index="" >团队成员列表</el-menu-item>
-                <el-menu-item  index="" >分销模板管理</el-menu-item>
-                <el-menu-item  index="" >分销比例管理</el-menu-item> -->
+              <el-menu-item-group style="min-width:0" v-for="(items,index) in item.appRights" :key="index">
+                <el-menu-item  index="/team/list" v-if="items.rightsName == 'team.all'" >团队列表</el-menu-item>
+                <el-menu-item  index="" v-if="items.rightsName == 'team.all'">团队成员列表</el-menu-item>
+                <el-menu-item  index="" v-if="items.rightsName == 'distribution.all'">分销模板管理</el-menu-item>
+                <el-menu-item  index="" v-if="items.rightsName == 'distribution.all'">分销比例管理</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
       </el-menu>
@@ -68,7 +68,8 @@ export default {
       }
   },
   created() {
-    this.router = this.$store.state.router
+    this.router = JSON.parse(localStorage.getItem('list'))
+    // this.router = this.$store.state.router
     console.log(444,this.router);
   },
   methods: {

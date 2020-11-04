@@ -88,6 +88,8 @@ export default {
                 }).then(rest => {
                   console.log(666,rest);
                   // let rulelist = rest.rights;
+                  let rulelist = JSON.stringify(rest.rights);
+                  localStorage.setItem('list',rulelist);
                   this.$store.commit('navList',rest.rights)
                  })
                this.$router.push("/");

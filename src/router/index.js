@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const login = () => import('@/views/login.vue')
-// const usermoney = () => import('@/views/Home/component/usermoney.vue');
+const teamlist = () => import('@/views/Home/component/teamList.vue');
 
 Vue.use(VueRouter)
 
@@ -17,14 +17,11 @@ const routes = [
     name: 'home',
     component: () => import(/* webpackChunkName: "home" */ '../views/Home/home.vue'),
     children: [
-      // {
-      //     path: '/usermoney',
-      //     meta: {
-      //         name: '/usermoney',
-      //         title: '佣金管理'
-      //     },
-      //     component: usermoney
-      // },
+      //团队列表
+      {
+          path: '/team/list',
+          component: teamlist
+      },
       // {
       //     path: '/department',
       //     meta: {

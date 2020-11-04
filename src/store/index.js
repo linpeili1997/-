@@ -7,8 +7,9 @@ export default new Vuex.Store({
   state: {
     token:'',
     router:[]
-  },
-  mutations: {
+    },
+  
+  mutations : {
     savetoken(state,played) {
       state.token = played
     },
