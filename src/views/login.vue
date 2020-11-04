@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { loginApi,getusercommissionList  } from '../request/api'
+import { loginApi , quanxianApi  } from '../request/api'
 
 export default {
   data() {
@@ -74,20 +74,23 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          getusercommissionList({
-            page:1,
-            pagesize: 10
-          }).then(res => {
-            console.log(res);
-          })
            loginApi({
              password:this.ruleForm.password,
              account:this.ruleForm.user,
            }).then(res=>{
              console.log(res);
              if(res) {
+               this.$store.commit('savetoken',res.accessToken)
                localStorage.setItem('token',res.accessToken);
-               this.$router.push("/home");
+               localStorage.setItem('userid',res.userID);
+                quanxianApi({
+                  id:res.userID
+                }).then(rest => {
+                  console.log(666,rest);
+                  // let rulelist = rest.rights;
+                  this.$store.commit('navList',rest.rights)
+                 })
+               this.$router.push("/");
              }
            })
         } else {

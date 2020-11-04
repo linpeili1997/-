@@ -8,7 +8,9 @@
         </a>
       </div>
       <el-menu
-            default-active="2"
+            v-for="(item,index) in router" :key="index"
+            router
+            default-active="$route.path"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -19,13 +21,19 @@
           >
             <el-submenu index="1">
               <template slot="title">
-                <span>佣金管理</span>
+                <span>分销管理</span>
+                <!-- <span>佣金管理</span>
+                <span>积分管理</span>
+                <span>提现管理</span> -->
               </template>
               <el-menu-item-group style="min-width:0">
-                <el-menu-item index="1-1">用户佣金列表</el-menu-item>
+                <el-menu-item  index="" >团队列表</el-menu-item>
+                <!-- <el-menu-item  index="" >团队成员列表</el-menu-item>
+                <el-menu-item  index="" >分销模板管理</el-menu-item>
+                <el-menu-item  index="" >分销比例管理</el-menu-item> -->
               </el-menu-item-group>
             </el-submenu>
-        </el-menu>
+      </el-menu>
         <div class="sidebar-logo-container">
             <div class="sidebar-logo-link">
                 <h1>版本号：V1.0.0</h1>
@@ -52,11 +60,16 @@
 </template>
 
 <script>
+
 export default {
   data() {
       return {
-
+        router:[]
       }
+  },
+  created() {
+    this.router = this.$store.state.router
+    console.log(444,this.router);
   },
   methods: {
     handleOpen(key, keyPath) {

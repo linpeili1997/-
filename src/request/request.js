@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '@/router/'
 import {Message, Loading} from "element-ui"
-// import qs from 'qs'
+import qs from 'qs'
 
 const service = axios.create({
     timeout: 5000, // 单位：毫秒
@@ -21,16 +21,14 @@ service.interceptors.request.use(
         count++;
         const token = localStorage.getItem('token')
         if (config.method === 'post' || config.method === 'put' || config.method === 'patch') {
-            if (token) {
-                config.data.token = token
-            }
-            // config.data = qs.stringify(config.data, {arrayFormat: 'repeat', allowDots: true})
+            console.log(777,config);
             config.data = JSON.stringify(config.data);
-
         } else if (config.method === 'get' || config.method === 'delete') {
+            if (token) {
+                config.headers.common['Authorization'] = "Bearer " + token
+            }
             config.params = config.params || {}
-            config.params.token = token
-            config.url += '?' + JSON.stringify(config.params)
+            config.url += '?' + qs.stringify(config.params)
             delete config.params
         }
         return config
@@ -48,14 +46,13 @@ service.interceptors.response.use(
         if (count === 0) {
             loading.close()
         }
-
+        
         if (response.data.success === true) {
             return response.data
         }
 
         if (response.data.success === false && response.data.msg === 'token 非法') {
             localStorage.removeItem('token')
-            localStorage.removeItem('username')
             router.replace('/login')
         }
         return response.data
@@ -66,8 +63,8 @@ service.interceptors.response.use(
             loading.close()
         }
         Message({
-            Message: error.message || '请求失败',
-            type: 'error',
+            Message: '登陆失败' || '请求失败',
+            type: 'error',    
             duration: 5 * 1000
         })
         return Promise.reject(error)

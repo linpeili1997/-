@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 const login = () => import('@/views/login.vue')
+// const usermoney = () => import('@/views/Home/component/usermoney.vue');
 
 Vue.use(VueRouter)
 
@@ -12,17 +13,17 @@ const routes = [
     component: login
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: () => import(/* webpackChunkName: "home" */ '../views/Home/home.vue'),
     children: [
       // {
-      //     path: '/employee',
+      //     path: '/usermoney',
       //     meta: {
-      //         name: '/employee',
+      //         name: '/usermoney',
       //         title: '佣金管理'
       //     },
-      //     component: Employee
+      //     component: usermoney
       // },
       // {
       //     path: '/department',
@@ -43,7 +44,7 @@ const routes = [
     ]
   }
 ]
-
+ 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -52,7 +53,6 @@ const router = new VueRouter({
 
 //路由守卫  判断是否回到登陆页
 router.beforeEach((to, from, next) => {
-  //
   if (localStorage.getItem('token') && to.path === '/login') {
       next(from)
   } else if (!localStorage.getItem('token') && to.path !== '/login'){
